@@ -3,7 +3,11 @@
 import { useState } from 'react'
 import Image from 'next/image'
 
-export default function Navbar() {
+interface NavbarProps {
+  onAskAIClick?: () => void
+}
+
+export default function Navbar({ onAskAIClick }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isReportsOpen, setIsReportsOpen] = useState(false)
 
@@ -69,6 +73,18 @@ export default function Navbar() {
               User Accounts
             </a>
           </div>
+
+          {/* Ask AI Button */}
+          <button
+            onClick={onAskAIClick}
+            className="hidden md:flex items-center gap-2 bg-white text-[#01B2D6] px-5 py-2 rounded-full hover:bg-gray-50 transition-colors font-medium text-[16px]"
+          >
+            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="#01B2D6"/>
+              <path d="M19 3L20 6L23 7L20 8L19 11L18 8L15 7L18 6L19 3Z" fill="#01B2D6"/>
+            </svg>
+            Ask AI
+          </button>
 
           {/* Right side - Client & User */}
           <div className="hidden md:flex items-center space-x-0.5">

@@ -1,6 +1,22 @@
 'use client'
 
-export default function Hero() {
+import { useState } from 'react'
+
+interface HeroProps {
+  isAIChatOpen: boolean
+}
+
+export default function Hero({ isAIChatOpen }: HeroProps) {
+  const [message, setMessage] = useState('')
+
+  const handleSend = () => {
+    if (message.trim()) {
+      // Handle message send
+      console.log('Sending message:', message)
+      setMessage('')
+    }
+  }
+
   return (
     <div className="pt-[70px] min-h-screen bg-[#f5f5f5]">
       <div className="container mx-auto px-6 py-8">
@@ -8,6 +24,36 @@ export default function Hero() {
         <h2 className="text-center text-[32px] font-medium text-[#333] mb-8">
           Welcome to ClaimsManager Provider Portal!
         </h2>
+
+        {/* AI Chat Window */}
+        {isAIChatOpen && (
+          <div className="mx-auto mb-8 bg-white rounded-lg shadow-sm border border-gray-200" style={{ width: '50vw', height: '40vh' }}>
+            <div className="h-full flex flex-col p-6">
+              {/* Chat messages area - empty for now */}
+              <div className="flex-1"></div>
+              
+              {/* Search bar at bottom */}
+              <div className="relative">
+                <input
+                  type="text"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                  placeholder="Ask me anything..."
+                  className="w-full px-6 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-gray-300 text-[15px] pr-14"
+                />
+                <button
+                  onClick={handleSend}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#01B2D6] rounded-full flex items-center justify-center hover:bg-[#019bb8] transition-colors"
+                >
+                  <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 4L12 20M12 4L6 10M12 4L18 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Add Widget Button */}
         <div className="text-right mb-4">
