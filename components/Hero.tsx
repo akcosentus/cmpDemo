@@ -27,7 +27,7 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
 
         {/* AI Chat Window */}
         {isAIChatOpen && (
-          <div className="mx-auto mb-8 bg-white rounded-lg shadow-sm border border-gray-200" style={{ width: '50vw', height: '40vh' }}>
+          <div className="mx-auto mb-8 bg-white rounded-lg shadow-sm border border-gray-200" style={{ width: '50vw', height: '55vh' }}>
             <div className="h-full flex flex-col p-6">
               {/* Chat messages area - empty for now */}
               <div className="flex-1"></div>
