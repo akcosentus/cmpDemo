@@ -8,7 +8,7 @@ export default function Navbar() {
   const [isReportsOpen, setIsReportsOpen] = useState(false)
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-gradient-to-r from-[#17a2b8] to-[#1bb9d1] shadow-md">
+    <nav className="fixed top-0 w-full z-50 bg-[#01B2D6] shadow-md">
       <div className="container-fluid px-4">
         <div className="flex items-center justify-between h-[50px]">
           {/* Brand/Logo - Left Side */}
