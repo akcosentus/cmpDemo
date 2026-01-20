@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
-import ChatBot from '@/components/ChatBot'
 
 export default function Home() {
   const [isAIChatOpen, setIsAIChatOpen] = useState(false)
@@ -12,7 +11,6 @@ export default function Home() {
     <main className="min-h-screen">
       <Navbar onAskAIClick={() => setIsAIChatOpen(!isAIChatOpen)} />
       <Hero isAIChatOpen={isAIChatOpen} />
-      <ChatBot />
     </main>
   )
 }
