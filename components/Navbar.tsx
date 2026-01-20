@@ -20,9 +20,9 @@ export default function Navbar({ onAskAIClick }: NavbarProps) {
             <Image 
               src="/cosentus_lion.png" 
               alt="Cosentus Logo" 
-              width={48} 
-              height={48}
-              className="w-12 h-12 object-contain"
+              width={56} 
+              height={56}
+              className="w-14 h-14 object-contain"
             />
           </a>
 
