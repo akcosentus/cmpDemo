@@ -36,8 +36,8 @@ export default function Navbar() {
           </button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1 flex-1 ml-4">
-            <a href="/caselogs" className="px-3 py-3 text-white hover:bg-white/10 transition-colors text-lg font-light">
+          <div className="hidden md:flex items-center space-x-0.5 flex-1 ml-3">
+            <a href="/caselogs" className="px-2.5 py-3 text-white hover:bg-white/10 transition-colors text-[19px] font-normal">
               Case Logs
             </a>
             
@@ -45,7 +45,7 @@ export default function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setIsReportsOpen(!isReportsOpen)}
-                className="px-3 py-3 text-white hover:bg-white/10 transition-colors text-lg font-light flex items-center"
+                className="px-2.5 py-3 text-white hover:bg-white/10 transition-colors text-[19px] font-normal flex items-center"
               >
                 Reports
                 <svg className="ml-1.5 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -65,17 +65,17 @@ export default function Navbar() {
               )}
             </div>
 
-            <a href="/accounts" className="px-3 py-3 text-white hover:bg-white/10 transition-colors text-lg font-light">
+            <a href="/accounts" className="px-2.5 py-3 text-white hover:bg-white/10 transition-colors text-[19px] font-normal">
               User Accounts
             </a>
           </div>
 
           {/* Right side - Client & User */}
-          <div className="hidden md:flex items-center space-x-1">
-            <a href="/switch-client" className="px-3 py-3 text-white hover:bg-white/10 transition-colors text-lg font-light">
+          <div className="hidden md:flex items-center space-x-0.5">
+            <a href="/switch-client" className="px-2.5 py-3 text-white hover:bg-white/10 transition-colors text-[19px] font-normal">
               DEMO ANESTHESIA
             </a>
-            <a href="/logout" className="px-3 py-3 text-white hover:bg-white/10 transition-colors text-lg font-light">
+            <a href="/logout" className="px-2.5 py-3 text-white hover:bg-white/10 transition-colors text-[19px] font-normal">
               Log Out
             </a>
           </div>
