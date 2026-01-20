@@ -1,6 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+
+interface Message {
+  role: 'user' | 'assistant'
+  content: string
+}
 
 interface HeroProps {
   isAIChatOpen: boolean
@@ -8,12 +13,88 @@ interface HeroProps {
 
 export default function Hero({ isAIChatOpen }: HeroProps) {
   const [message, setMessage] = useState('')
+  const [messages, setMessages] = useState<Message[]>([])
+  const [chatId, setChatId] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  const handleSend = () => {
-    if (message.trim()) {
-      // Handle message send
-      console.log('Sending message:', message)
-      setMessage('')
+  // Initialize chat session when chat opens
+  useEffect(() => {
+    if (isAIChatOpen && !chatId) {
+      initializeChat()
+    }
+  }, [isAIChatOpen])
+
+  // Auto-scroll to bottom when new messages arrive
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
+  const initializeChat = async () => {
+    try {
+      const response = await fetch('/api/retell/create-chat', {
+        method: 'POST'
+      })
+      const data = await response.json()
+      if (data.chat_id) {
+        setChatId(data.chat_id)
+        setMessages([{
+          role: 'assistant',
+          content: 'Hello! How can I help you today?'
+        }])
+      }
+    } catch (error) {
+      console.error('Error initializing chat:', error)
+      setMessages([{
+        role: 'assistant',
+        content: 'Sorry, I\'m having trouble connecting. Please try again.'
+      }])
+    }
+  }
+
+  const handleSend = async () => {
+    if (!message.trim() || !chatId || isLoading) return
+
+    const userMessage = message.trim()
+    setMessage('')
+    setIsLoading(true)
+
+    // Add user message to chat
+    setMessages(prev => [...prev, { role: 'user', content: userMessage }])
+
+    try {
+      const response = await fetch('/api/retell/send-message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          chat_id: chatId,
+          content: userMessage
+        })
+      })
+
+      const data = await response.json()
+      
+      if (data.messages && data.messages.length > 0) {
+        // Add assistant's response(s)
+        const assistantMessages = data.messages
+          .filter((msg: any) => msg.role === 'assistant')
+          .map((msg: any) => ({
+            role: 'assistant' as const,
+            content: msg.content
+          }))
+        
+        setMessages(prev => [...prev, ...assistantMessages])
+      }
+    } catch (error) {
+      console.error('Error sending message:', error)
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: 'Sorry, I encountered an error. Please try again.'
+      }])
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -29,8 +110,37 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
         {isAIChatOpen && (
           <div className="mx-auto mb-8 bg-white rounded-lg shadow-sm border border-gray-200" style={{ width: '50vw', height: '55vh' }}>
             <div className="h-full flex flex-col p-6">
-              {/* Chat messages area - empty for now */}
-              <div className="flex-1"></div>
+              {/* Chat messages area */}
+              <div className="flex-1 overflow-y-auto mb-4 space-y-4">
+                {messages.map((msg, index) => (
+                  <div
+                    key={index}
+                    className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  >
+                    <div
+                      className={`max-w-[80%] rounded-2xl px-4 py-2 ${
+                        msg.role === 'user'
+                          ? 'bg-[#01B2D6] text-white rounded-br-sm'
+                          : 'bg-gray-100 text-gray-800 rounded-bl-sm'
+                      }`}
+                    >
+                      <p className="text-[15px]">{msg.content}</p>
+                    </div>
+                  </div>
+                ))}
+                {isLoading && (
+                  <div className="flex justify-start">
+                    <div className="bg-gray-100 rounded-2xl rounded-bl-sm px-4 py-3">
+                      <div className="flex space-x-1">
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
               
               {/* Search bar at bottom */}
               <div className="relative">
