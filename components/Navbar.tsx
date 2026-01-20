@@ -8,13 +8,24 @@ export default function Navbar() {
   const [isReportsOpen, setIsReportsOpen] = useState(false)
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-[#222] border-b border-[#080808] shadow-md">
+    <nav className="fixed top-0 w-full z-50 bg-gradient-to-r from-[#17a2b8] to-[#1bb9d1] shadow-md">
       <div className="container-fluid px-4">
         <div className="flex items-center justify-between h-[50px]">
+          {/* Brand/Logo - Left Side */}
+          <a href="/" className="flex items-center space-x-2 text-white hover:opacity-90 transition-opacity">
+            <Image 
+              src="/cosentus_lion.png" 
+              alt="Cosentus Logo" 
+              width={32} 
+              height={32}
+              className="w-8 h-8 object-contain"
+            />
+          </a>
+
           {/* Mobile menu button */}
           <button
             type="button"
-            className="md:hidden text-white p-2 hover:bg-[#333] rounded"
+            className="md:hidden text-white p-2 hover:bg-white/10 rounded order-first mr-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <div className="space-y-1.5">
@@ -24,17 +35,9 @@ export default function Navbar() {
             </div>
           </button>
 
-          {/* Brand/Logo */}
-          <a href="/" className="flex items-center space-x-2 text-[#9d9d9d] hover:text-white transition-colors">
-            <div className="w-8 h-8 bg-gradient-to-br from-amber-600 to-amber-800 rounded flex items-center justify-center font-bold text-white text-sm">
-              C
-            </div>
-            <span className="hidden sm:inline font-light text-sm">SyMed Manager Suite</span>
-          </a>
-
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
-            <a href="/caselogs" className="px-4 py-2 text-[#9d9d9d] hover:text-white hover:bg-[#333] transition-colors text-sm">
+          <div className="hidden md:flex items-center space-x-1 flex-1 ml-6">
+            <a href="/caselogs" className="px-4 py-2 text-white hover:bg-white/10 transition-colors text-sm font-light">
               Case Logs
             </a>
             
@@ -42,7 +45,7 @@ export default function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setIsReportsOpen(!isReportsOpen)}
-                className="px-4 py-2 text-[#9d9d9d] hover:text-white hover:bg-[#333] transition-colors text-sm flex items-center"
+                className="px-4 py-2 text-white hover:bg-white/10 transition-colors text-sm font-light flex items-center"
               >
                 Reports
                 <svg className="ml-1 w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -62,17 +65,17 @@ export default function Navbar() {
               )}
             </div>
 
-            <a href="/accounts" className="px-4 py-2 text-[#9d9d9d] hover:text-white hover:bg-[#333] transition-colors text-sm">
+            <a href="/accounts" className="px-4 py-2 text-white hover:bg-white/10 transition-colors text-sm font-light">
               User Accounts
             </a>
           </div>
 
           {/* Right side - Client & User */}
           <div className="hidden md:flex items-center space-x-2">
-            <a href="/switch-client" className="px-3 py-2 text-[#9d9d9d] hover:text-white hover:bg-[#333] transition-colors text-sm">
+            <a href="/switch-client" className="px-3 py-2 text-white hover:bg-white/10 transition-colors text-sm font-light">
               DEMO ANESTHESIA
             </a>
-            <a href="/logout" className="px-3 py-2 text-[#9d9d9d] hover:text-white hover:bg-[#333] transition-colors text-sm">
+            <a href="/logout" className="px-3 py-2 text-white hover:bg-white/10 transition-colors text-sm font-light">
               Log Out
             </a>
           </div>
@@ -82,20 +85,20 @@ export default function Navbar() {
         {isMenuOpen && (
           <div className="md:hidden pb-4">
             <div className="flex flex-col space-y-2">
-              <a href="/caselogs" className="px-4 py-2 text-[#9d9d9d] hover:text-white hover:bg-[#333] transition-colors text-sm">
+              <a href="/caselogs" className="px-4 py-2 text-white hover:bg-white/10 transition-colors text-sm font-light">
                 Case Logs
               </a>
-              <a href="/reports" className="px-4 py-2 text-[#9d9d9d] hover:text-white hover:bg-[#333] transition-colors text-sm">
+              <a href="/reports" className="px-4 py-2 text-white hover:bg-white/10 transition-colors text-sm font-light">
                 Reports
               </a>
-              <a href="/accounts" className="px-4 py-2 text-[#9d9d9d] hover:text-white hover:bg-[#333] transition-colors text-sm">
+              <a href="/accounts" className="px-4 py-2 text-white hover:bg-white/10 transition-colors text-sm font-light">
                 User Accounts
               </a>
-              <div className="border-t border-[#333] my-2"></div>
-              <a href="/switch-client" className="px-4 py-2 text-[#9d9d9d] hover:text-white hover:bg-[#333] transition-colors text-sm">
+              <div className="border-t border-white/20 my-2"></div>
+              <a href="/switch-client" className="px-4 py-2 text-white hover:bg-white/10 transition-colors text-sm font-light">
                 DEMO ANESTHESIA
               </a>
-              <a href="/logout" className="px-4 py-2 text-[#9d9d9d] hover:text-white hover:bg-[#333] transition-colors text-sm">
+              <a href="/logout" className="px-4 py-2 text-white hover:bg-white/10 transition-colors text-sm font-light">
                 Log Out
               </a>
             </div>

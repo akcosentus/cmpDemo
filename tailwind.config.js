@@ -8,7 +8,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'cosentus-blue': '#337ab7',
+        'cosentus-cyan': '#17a2b8',
+        'cosentus-cyan-light': '#1bb9d1',
         'navbar-dark': '#222',
       },
     },
