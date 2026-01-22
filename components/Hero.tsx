@@ -109,8 +109,8 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
 
         {/* AI Chat Window */}
         {isAIChatOpen && (
-          <div className="mx-auto mb-8 bg-white rounded-lg shadow-sm border border-gray-200" style={{ width: '50vw', height: '55vh' }}>
-            <div className="h-full flex flex-col p-4">
+          <div className="mx-auto mb-8 bg-white rounded-lg shadow-sm border border-gray-200 w-[95vw] md:w-[50vw]" style={{ height: '55vh' }}>
+            <div className="h-full flex flex-col p-3 md:p-4">
               {/* Chat messages area */}
               <div className="flex-1 overflow-y-auto mb-3 space-y-3">
                 {messages.map((msg, index) => (
@@ -119,19 +119,19 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
                     className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
-                      className={`max-w-[80%] rounded-2xl px-4 py-2 ${
+                      className={`max-w-[85%] md:max-w-[80%] rounded-2xl px-3 py-2 md:px-4 ${
                         msg.role === 'user'
                           ? 'bg-[#01B2D6] text-white rounded-br-sm'
                           : 'bg-gray-100 text-gray-800 rounded-bl-sm'
                       }`}
                     >
-                      <p className="text-[15px]">{msg.content}</p>
+                      <p className="text-[14px] md:text-[15px]">{msg.content}</p>
                     </div>
                   </div>
                 ))}
                 {isLoading && (
                   <div className="flex justify-start">
-                    <div className="bg-gray-100 rounded-2xl rounded-bl-sm px-4 py-3">
+                    <div className="bg-gray-100 rounded-2xl rounded-bl-sm px-3 py-3 md:px-4">
                       <div className="flex space-x-1">
                         <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                         <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
@@ -157,12 +157,12 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
                   }}
                   placeholder="Ask me anything..."
                   disabled={isLoading || !chatId}
-                  className="w-full px-6 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-gray-300 text-[15px] pr-14 disabled:bg-gray-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 md:px-6 py-3 md:py-4 rounded-full border border-gray-200 focus:outline-none focus:border-gray-300 text-[14px] md:text-[15px] pr-12 md:pr-14 disabled:bg-gray-50 disabled:cursor-not-allowed"
                 />
                 <button
                   onClick={handleSend}
                   disabled={isLoading || !chatId || !message.trim()}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#01B2D6] rounded-full flex items-center justify-center hover:bg-[#019bb8] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="absolute right-1.5 md:right-2 top-1/2 -translate-y-1/2 w-9 h-9 md:w-10 md:h-10 bg-[#01B2D6] rounded-full flex items-center justify-center hover:bg-[#019bb8] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
