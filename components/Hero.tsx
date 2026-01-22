@@ -110,9 +110,9 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
         {/* AI Chat Window */}
         {isAIChatOpen && (
           <div className="mx-auto mb-8 bg-white rounded-lg shadow-sm border border-gray-200" style={{ width: '50vw', height: '55vh' }}>
-            <div className="h-full flex flex-col p-6">
+            <div className="h-full flex flex-col p-4">
               {/* Chat messages area */}
-              <div className="flex-1 overflow-y-auto mb-4 space-y-4">
+              <div className="flex-1 overflow-y-auto mb-3 space-y-3">
                 {messages.map((msg, index) => (
                   <div
                     key={index}
