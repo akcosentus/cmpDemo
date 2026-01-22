@@ -185,14 +185,14 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
         </div>
 
         {/* Dashboard Widgets Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 auto-rows-fr">
           {/* Widget 1: Billed and Collected by Week */}
-          <div className="bg-white rounded-sm border border-[#ddd] shadow-[0_1px_1px_rgba(0,0,0,0.05)]">
-            <div className="bg-[#c5e9f2] border-b border-[#bbb] px-4 py-3 flex justify-between items-center">
-              <h3 className="text-[15px] font-semibold text-[#333]">Billed and Collected by Week</h3>
+          <div className="bg-white rounded-sm border border-[#ddd] shadow-[0_1px_1px_rgba(0,0,0,0.05)] flex flex-col">
+            <div className="bg-[#c5e9f2] border-b border-[#bbb] px-3 py-2 flex justify-between items-center">
+              <h3 className="text-[13px] font-semibold text-[#333]">Billed and Collected by Week</h3>
               <button className="text-[#999] hover:text-[#666] text-xl leading-none font-light">×</button>
             </div>
-            <div className="p-4 h-[400px] flex items-center justify-center">
+            <div className="p-3 flex-1 flex items-center justify-center min-h-0">
               <div className="w-full h-full flex flex-col">
                 <svg className="w-full flex-1" viewBox="0 0 320 240" preserveAspectRatio="xMidYMid meet" style={{shapeRendering: 'crispEdges'}}>
                   {/* Grid lines - more visible */}
@@ -262,12 +262,12 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
           </div>
 
           {/* Widget 2: Billed and Collected by Month */}
-          <div className="bg-white rounded-sm border border-[#ddd] shadow-[0_1px_1px_rgba(0,0,0,0.05)]">
-            <div className="bg-[#c5e9f2] border-b border-[#bbb] px-4 py-3 flex justify-between items-center">
-              <h3 className="text-[15px] font-semibold text-[#333]">Billed and Collected by Month</h3>
+          <div className="bg-white rounded-sm border border-[#ddd] shadow-[0_1px_1px_rgba(0,0,0,0.05)] flex flex-col">
+            <div className="bg-[#c5e9f2] border-b border-[#bbb] px-3 py-2 flex justify-between items-center">
+              <h3 className="text-[13px] font-semibold text-[#333]">Billed and Collected by Month</h3>
               <button className="text-[#999] hover:text-[#666] text-xl leading-none font-light">×</button>
             </div>
-            <div className="p-4 h-[400px] flex items-center justify-center">
+            <div className="p-3 flex-1 flex items-center justify-center min-h-0">
               <div className="w-full h-full flex flex-col">
                 <svg className="w-full flex-1" viewBox="0 0 320 240" preserveAspectRatio="xMidYMid meet" style={{shapeRendering: 'crispEdges'}}>
                   {/* Grid lines */}
@@ -317,14 +317,14 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
                   <text x="240" y="200" fontSize="10" textAnchor="middle" fill="#333" fontFamily="Arial, sans-serif">November</text>
                   <text x="285" y="200" fontSize="10" textAnchor="middle" fill="#333" fontFamily="Arial, sans-serif">December</text>
                 </svg>
-                <div className="flex items-center justify-center gap-4 mt-2">
+                <div className="flex items-center justify-center gap-2 mt-1.5">
                   <div className="flex items-center">
-                    <span className="inline-block w-3 h-3 bg-[#5cb85c] mr-1.5"></span>
-                    <span className="text-[11px] text-gray-700">Billed Amount</span>
+                    <span className="inline-block w-2.5 h-2.5 bg-[#5cb85c] mr-1"></span>
+                    <span className="text-[10px] text-gray-700">Billed Amount</span>
                   </div>
                   <div className="flex items-center">
-                    <span className="inline-block w-3 h-3 bg-[#e91e8c] mr-1.5"></span>
-                    <span className="text-[11px] text-gray-700">Billed Amount Collected</span>
+                    <span className="inline-block w-2.5 h-2.5 bg-[#e91e8c] mr-1"></span>
+                    <span className="text-[10px] text-gray-700">Collected</span>
                   </div>
                 </div>
               </div>
@@ -332,12 +332,12 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
           </div>
 
           {/* Widget 3: Denials by Month */}
-          <div className="bg-white rounded-sm border border-[#ddd] shadow-[0_1px_1px_rgba(0,0,0,0.05)]">
-            <div className="bg-[#c5e9f2] border-b border-[#bbb] px-4 py-3 flex justify-between items-center">
-              <h3 className="text-[15px] font-semibold text-[#333]">Denials by Month</h3>
+          <div className="bg-white rounded-sm border border-[#ddd] shadow-[0_1px_1px_rgba(0,0,0,0.05)] flex flex-col">
+            <div className="bg-[#c5e9f2] border-b border-[#bbb] px-3 py-2 flex justify-between items-center">
+              <h3 className="text-[13px] font-semibold text-[#333]">Denials by Month</h3>
               <button className="text-[#999] hover:text-[#666] text-xl leading-none font-light">×</button>
             </div>
-            <div className="p-4 h-[400px] flex items-center justify-center">
+            <div className="p-3 flex-1 flex items-center justify-center min-h-0">
               <div className="w-full h-full flex flex-col">
                 <svg className="w-full flex-1" viewBox="0 0 320 240" preserveAspectRatio="xMidYMid meet" style={{shapeRendering: 'crispEdges'}}>
                   {/* Grid lines */}
@@ -382,21 +382,21 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
                   <text x="240" y="200" fontSize="10" textAnchor="middle" fill="#333" fontFamily="Arial, sans-serif">December</text>
                   <text x="285" y="200" fontSize="10" textAnchor="middle" fill="#333" fontFamily="Arial, sans-serif">January</text>
                 </svg>
-                <div className="flex items-center justify-center mt-2">
-                  <span className="inline-block w-3 h-3 bg-[#5cb85c] mr-1.5"></span>
-                  <span className="text-[11px] text-gray-700">Denials Received</span>
+                <div className="flex items-center justify-center mt-1.5">
+                  <span className="inline-block w-2.5 h-2.5 bg-[#5cb85c] mr-1"></span>
+                  <span className="text-[10px] text-gray-700">Denials Received</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Widget 4: Denied Claims By Payer */}
-          <div className="bg-white rounded-sm border border-[#ddd] shadow-[0_1px_1px_rgba(0,0,0,0.05)]">
-            <div className="bg-[#c5e9f2] border-b border-[#bbb] px-4 py-3 flex justify-between items-center">
-              <h3 className="text-[15px] font-semibold text-[#333]">Denied Claims By Payer</h3>
+          <div className="bg-white rounded-sm border border-[#ddd] shadow-[0_1px_1px_rgba(0,0,0,0.05)] flex flex-col">
+            <div className="bg-[#c5e9f2] border-b border-[#bbb] px-3 py-2 flex justify-between items-center">
+              <h3 className="text-[13px] font-semibold text-[#333]">Denied Claims By Payer</h3>
               <button className="text-[#999] hover:text-[#666] text-xl leading-none font-light">×</button>
             </div>
-            <div className="p-4 h-[400px] flex items-center justify-center">
+            <div className="p-3 flex-1 flex items-center justify-center min-h-0">
               <div className="w-full h-full flex flex-col items-center justify-center">
                 <svg className="w-64 h-64" viewBox="0 0 200 200">
                   {/* Full pie chart circle */}
@@ -404,9 +404,9 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
                   {/* Small white line for visual detail */}
                   <line x1="100" y1="20" x2="100" y2="100" stroke="white" strokeWidth="2" />
                 </svg>
-                <div className="flex items-center justify-center mt-3">
-                  <span className="inline-block w-3 h-3 rounded-full bg-[#5cb85c] mr-2"></span>
-                  <span className="text-[11px] text-gray-700">NOVITAS SOLUTIONS</span>
+                <div className="flex items-center justify-center mt-2">
+                  <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#5cb85c] mr-1"></span>
+                  <span className="text-[10px] text-gray-700">NOVITAS SOLUTIONS</span>
                 </div>
               </div>
             </div>
