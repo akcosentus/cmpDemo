@@ -247,14 +247,14 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
                   <text x="225" y="200" fontSize="9" textAnchor="middle" fill="#333" fontFamily="Arial, sans-serif" transform="rotate(45 225 200)">12/07/2025</text>
                   <text x="255" y="200" fontSize="9" textAnchor="middle" fill="#333" fontFamily="Arial, sans-serif" transform="rotate(45 255 200)">12/14/2025</text>
                 </svg>
-                <div className="flex items-center justify-center gap-4 mt-2">
+                <div className="flex items-center justify-center gap-2 mt-1.5">
                   <div className="flex items-center">
-                    <span className="inline-block w-3 h-3 bg-[#5cb85c] mr-1.5"></span>
-                    <span className="text-[11px] text-gray-700">Billed Amount</span>
+                    <span className="inline-block w-2.5 h-2.5 bg-[#5cb85c] mr-1"></span>
+                    <span className="text-[10px] text-gray-700">Billed Amount</span>
                   </div>
                   <div className="flex items-center">
-                    <span className="inline-block w-3 h-3 bg-[#e91e8c] mr-1.5"></span>
-                    <span className="text-[11px] text-gray-700">Billed Amount Collected</span>
+                    <span className="inline-block w-2.5 h-2.5 bg-[#e91e8c] mr-1"></span>
+                    <span className="text-[10px] text-gray-700">Collected</span>
                   </div>
                 </div>
               </div>
