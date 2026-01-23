@@ -62,6 +62,13 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
     }
   }, [isDragging, minWidth, maxWidth])
 
+  const suggestedQuestions = [
+    "Compare my profitability across surgery centers",
+    "Analyze my worst-performing payers",
+    "Show me my top documentation issues",
+    "Analyze my denial trends over time"
+  ]
+
   const initializeChat = async () => {
     try {
       console.log('Initializing chat...')
@@ -94,6 +101,58 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
         role: 'assistant',
         content: 'Sorry, I\'m having trouble connecting. Please try again.'
       }])
+    }
+  }
+
+  const handleQuestionClick = async (question: string) => {
+    if (!chatId || isLoading) return
+    
+    setIsLoading(true)
+
+    // Add user message to chat
+    setMessages(prev => [...prev, { role: 'user', content: question }])
+
+    try {
+      console.log('Sending message:', question, 'with chat_id:', chatId)
+      const response = await fetch('/api/retell/send-message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          chatId: chatId,
+          message: question
+        })
+      })
+
+      const data = await response.json()
+      console.log('Send message response:', data)
+      
+      if (data.error) {
+        console.error('Send message error:', data.error)
+        setMessages(prev => [...prev, {
+          role: 'assistant',
+          content: `Error: ${data.error}`
+        }])
+        return
+      }
+      
+      if (data.content) {
+        // Add assistant's response
+        setMessages(prev => [...prev, {
+          role: 'assistant',
+          content: data.content
+        }])
+        console.log('Added assistant message:', data.content)
+      }
+    } catch (error) {
+      console.error('Error sending message:', error)
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: 'Sorry, I encountered an error. Please try again.'
+      }])
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -363,27 +422,42 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
             {/* Chat Messages Area */}
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-3">
               {messages.map((msg, index) => (
-                <div
-                  key={index}
-                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`max-w-[80%] rounded-2xl px-4 py-2 ${
-                      msg.role === 'user'
-                        ? 'bg-black bg-opacity-70 text-white rounded-br-sm'
-                        : 'bg-gray-100 text-gray-800 rounded-bl-sm'
-                    }`}
-                  >
-                    {msg.role === 'assistant' ? (
-                      <div className="text-[15px] prose prose-sm max-w-none prose-headings:mt-3 prose-headings:mb-2 prose-p:my-1 prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5 prose-blockquote:my-2 prose-blockquote:border-l-4 prose-blockquote:border-[#01B2D6] prose-blockquote:pl-3 prose-blockquote:italic prose-table:text-sm prose-th:bg-gray-200 prose-th:p-2 prose-td:p-2 prose-td:border prose-th:border prose-code:bg-gray-200 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-pre:bg-gray-800 prose-pre:text-white prose-pre:p-3 prose-pre:rounded">
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                          {msg.content}
-                        </ReactMarkdown>
-                      </div>
-                    ) : (
-                      <p className="text-[15px]">{msg.content}</p>
-                    )}
+                <div key={index}>
+                  <div className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                    <div
+                      className={`max-w-[80%] rounded-2xl px-4 py-2 ${
+                        msg.role === 'user'
+                          ? 'bg-black bg-opacity-70 text-white rounded-br-sm'
+                          : 'bg-gray-100 text-gray-800 rounded-bl-sm'
+                      }`}
+                    >
+                      {msg.role === 'assistant' ? (
+                        <div className="text-[15px] prose prose-sm max-w-none prose-headings:mt-3 prose-headings:mb-2 prose-p:my-1 prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5 prose-blockquote:my-2 prose-blockquote:border-l-4 prose-blockquote:border-[#01B2D6] prose-blockquote:pl-3 prose-blockquote:italic prose-table:text-sm prose-th:bg-gray-200 prose-th:p-2 prose-td:p-2 prose-td:border prose-th:border prose-code:bg-gray-200 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-pre:bg-gray-800 prose-pre:text-white prose-pre:p-3 prose-pre:rounded">
+                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            {msg.content}
+                          </ReactMarkdown>
+                        </div>
+                      ) : (
+                        <p className="text-[15px]">{msg.content}</p>
+                      )}
+                    </div>
                   </div>
+                  
+                  {/* Show suggested questions only after the first assistant message */}
+                  {index === 0 && msg.role === 'assistant' && messages.length === 1 && (
+                    <div className="mt-4 space-y-2">
+                      {suggestedQuestions.map((question, qIndex) => (
+                        <button
+                          key={qIndex}
+                          onClick={() => handleQuestionClick(question)}
+                          disabled={isLoading}
+                          className="w-full text-left px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full transition-colors text-[14px] disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {question}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
               {isLoading && (
