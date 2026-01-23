@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import ChartRenderer from './ChartRenderer'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -227,6 +228,53 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
     }
   }
 
+  const parseCharts = (content: string) => {
+    const chartRegex = /```chart-(\w+)\n([\s\S]*?)```/g
+    const parts: Array<{ type: 'text' | 'chart', content: string, chartType?: string, chartData?: any }> = []
+    let lastIndex = 0
+    let match
+
+    while ((match = chartRegex.exec(content)) !== null) {
+      // Add text before chart
+      if (match.index > lastIndex) {
+        parts.push({
+          type: 'text',
+          content: content.substring(lastIndex, match.index)
+        })
+      }
+
+      // Add chart
+      try {
+        const chartType = match[1]
+        const chartData = JSON.parse(match[2])
+        parts.push({
+          type: 'chart',
+          content: '',
+          chartType,
+          chartData
+        })
+      } catch (e) {
+        // If JSON parse fails, treat as text
+        parts.push({
+          type: 'text',
+          content: match[0]
+        })
+      }
+
+      lastIndex = match.index + match[0].length
+    }
+
+    // Add remaining text
+    if (lastIndex < content.length) {
+      parts.push({
+        type: 'text',
+        content: content.substring(lastIndex)
+      })
+    }
+
+    return parts.length > 0 ? parts : [{ type: 'text' as const, content }]
+  }
+
   return (
     <div className="pt-[70px] min-h-screen bg-[#f5f5f5] relative">
       {/* Main Content - Shifts when panel is open */}
@@ -439,10 +487,23 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
                       }`}
                     >
                     {msg.role === 'assistant' ? (
-                      <div className="text-[15px] prose prose-sm max-w-none break-words overflow-wrap-anywhere prose-headings:mt-4 prose-headings:mb-3 prose-headings:font-semibold prose-p:my-3 prose-p:break-words prose-p:leading-relaxed prose-ul:my-3 prose-ol:my-3 prose-li:my-1 prose-blockquote:my-4 prose-blockquote:border-l-4 prose-blockquote:border-[#01B2D6] prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:py-2 prose-strong:font-semibold prose-code:bg-gray-200 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:break-words prose-pre:bg-gray-800 prose-pre:text-white prose-pre:p-4 prose-pre:rounded prose-pre:overflow-x-auto prose-pre:my-4">
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                          {msg.content}
-                        </ReactMarkdown>
+                      <div className="text-[15px]">
+                        {parseCharts(msg.content).map((part, partIndex) => (
+                          part.type === 'chart' ? (
+                            <ChartRenderer
+                              key={partIndex}
+                              type={part.chartType as any}
+                              data={part.chartData.data}
+                              config={part.chartData.config}
+                            />
+                          ) : (
+                            <div key={partIndex} className="prose prose-sm max-w-none break-words overflow-wrap-anywhere prose-headings:mt-4 prose-headings:mb-3 prose-headings:font-semibold prose-p:my-3 prose-p:break-words prose-p:leading-relaxed prose-ul:my-3 prose-ol:my-3 prose-li:my-1 prose-blockquote:my-4 prose-blockquote:border-l-4 prose-blockquote:border-[#01B2D6] prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:py-2 prose-strong:font-semibold prose-code:bg-gray-200 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:break-words prose-pre:bg-gray-800 prose-pre:text-white prose-pre:p-4 prose-pre:rounded prose-pre:overflow-x-auto prose-pre:my-4">
+                              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                {part.content}
+                              </ReactMarkdown>
+                            </div>
+                          )
+                        ))}
                       </div>
                     ) : (
                       <p className="text-[15px] break-words">{msg.content}</p>
