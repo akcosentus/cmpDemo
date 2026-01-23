@@ -33,16 +33,29 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
 
   const initializeChat = async () => {
     try {
+      console.log('Initializing chat...')
       const response = await fetch('/api/retell/create-chat', {
         method: 'POST'
       })
       const data = await response.json()
-      if (data.chat_id) {
-        setChatId(data.chat_id)
+      console.log('Create chat response:', data)
+      
+      if (data.error) {
+        console.error('Chat initialization error:', data.error)
+        setMessages([{
+          role: 'assistant',
+          content: `Error: ${data.error}`
+        }])
+        return
+      }
+      
+      if (data.chatId) {
+        setChatId(data.chatId)
         setMessages([{
           role: 'assistant',
           content: 'Hello! How can I help you today?'
         }])
+        console.log('Chat initialized with ID:', data.chatId)
       }
     } catch (error) {
       console.error('Error initializing chat:', error)
@@ -54,7 +67,10 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
   }
 
   const handleSend = async () => {
-    if (!message.trim() || !chatId || isLoading) return
+    if (!message.trim() || !chatId || isLoading) {
+      console.log('Send blocked:', { hasMessage: !!message.trim(), hasChatId: !!chatId, isLoading })
+      return
+    }
 
     const userMessage = message.trim()
     setMessage('')
@@ -64,29 +80,37 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
     setMessages(prev => [...prev, { role: 'user', content: userMessage }])
 
     try {
+      console.log('Sending message:', userMessage, 'with chat_id:', chatId)
       const response = await fetch('/api/retell/send-message', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          chat_id: chatId,
-          content: userMessage
+          chatId: chatId,
+          message: userMessage
         })
       })
 
       const data = await response.json()
+      console.log('Send message response:', data)
       
-      if (data.messages && data.messages.length > 0) {
-        // Add assistant's response(s)
-        const assistantMessages = data.messages
-          .filter((msg: any) => msg.role === 'assistant')
-          .map((msg: any) => ({
-            role: 'assistant' as const,
-            content: msg.content
-          }))
-        
-        setMessages(prev => [...prev, ...assistantMessages])
+      if (data.error) {
+        console.error('Send message error:', data.error)
+        setMessages(prev => [...prev, {
+          role: 'assistant',
+          content: `Error: ${data.error}`
+        }])
+        return
+      }
+      
+      if (data.content) {
+        // Add assistant's response
+        setMessages(prev => [...prev, {
+          role: 'assistant',
+          content: data.content
+        }])
+        console.log('Added assistant message:', data.content)
       }
     } catch (error) {
       console.error('Error sending message:', error)

@@ -1,49 +1,77 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+const RETELL_API_KEY = process.env.RETELL_API_KEY
+
 export async function POST(req: NextRequest) {
   try {
-    const { chat_id, content } = await req.json()
-    const apiKey = process.env.RETELL_API_KEY
-
-    if (!apiKey) {
+    // Validate API key
+    if (!RETELL_API_KEY) {
+      console.error('[CHAT] RETELL_API_KEY not configured')
       return NextResponse.json(
-        { error: 'Retell API key not configured' },
+        { error: 'Chat service not configured' },
         { status: 500 }
       )
     }
 
-    if (!chat_id || !content) {
+    // Parse request
+    const { chatId, message } = await req.json()
+    
+    if (!chatId || !message) {
       return NextResponse.json(
-        { error: 'chat_id and content are required' },
+        { error: 'Chat ID and message are required' },
         { status: 400 }
       )
     }
 
-    const response = await fetch('https://api.retellai.com/create-chat-completion', {
+    // Send message to Retell API using create-chat-completion
+    console.log(`[RETELL] Sending message to chat: ${chatId}`)
+    
+    const retellResponse = await fetch('https://api.retellai.com/create-chat-completion', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        'Authorization': `Bearer ${RETELL_API_KEY}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        chat_id,
-        content
+        chat_id: chatId,
+        content: message
       })
     })
 
-    if (!response.ok) {
-      const error = await response.text()
-      console.error('Retell API error:', error)
+    if (!retellResponse.ok) {
+      const errorText = await retellResponse.text()
+      console.error(`[RETELL] API error: ${retellResponse.status}`)
+      console.error(`[RETELL] Error body:`, errorText)
       return NextResponse.json(
         { error: 'Failed to send message' },
-        { status: response.status }
+        { status: 500 }
       )
     }
 
-    const data = await response.json()
-    return NextResponse.json({ messages: data.messages })
-  } catch (error) {
-    console.error('Error sending message:', error)
+    const data = await retellResponse.json()
+    console.log(`[RETELL] Received response from agent`)
+
+    // Extract agent response from messages array
+    const agentMessage = data.messages && data.messages.length > 0 
+      ? data.messages[0] 
+      : null
+
+    if (!agentMessage || !agentMessage.content) {
+      console.error(`[RETELL] No agent response in completion`)
+      return NextResponse.json(
+        { error: 'No response from agent' },
+        { status: 500 }
+      )
+    }
+
+    // Return the agent's response
+    return NextResponse.json({
+      content: agentMessage.content,
+      role: agentMessage.role,
+      messageId: agentMessage.message_id
+    })
+  } catch (error: any) {
+    console.error('[CHAT] Unexpected error in send-message:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
