@@ -469,13 +469,8 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
           
           {/* Panel Content */}
           <div className="flex-1 flex flex-col h-full">
-            {/* Chat Header */}
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-medium text-[#333]">AI Assistant</h3>
-            </div>
-
             {/* Chat Messages Area */}
-            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-3">
+            <div className="flex-1 overflow-y-auto px-6 py-6 space-y-3">
               {messages.map((msg, index) => (
                 <div key={index}>
                   <div className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
