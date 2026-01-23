@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -372,7 +374,15 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
                         : 'bg-gray-100 text-gray-800 rounded-bl-sm'
                     }`}
                   >
-                    <p className="text-[15px]">{msg.content}</p>
+                    {msg.role === 'assistant' ? (
+                      <div className="text-[15px] prose prose-sm max-w-none prose-headings:mt-3 prose-headings:mb-2 prose-p:my-1 prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5 prose-blockquote:my-2 prose-blockquote:border-l-4 prose-blockquote:border-[#01B2D6] prose-blockquote:pl-3 prose-blockquote:italic prose-table:text-sm prose-th:bg-gray-200 prose-th:p-2 prose-td:p-2 prose-td:border prose-th:border prose-code:bg-gray-200 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-pre:bg-gray-800 prose-pre:text-white prose-pre:p-3 prose-pre:rounded">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                          {msg.content}
+                        </ReactMarkdown>
+                      </div>
+                    ) : (
+                      <p className="text-[15px]">{msg.content}</p>
+                    )}
                   </div>
                 </div>
               ))}
