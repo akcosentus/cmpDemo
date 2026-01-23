@@ -18,11 +18,11 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [chatId, setChatId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const [panelWidth, setPanelWidth] = useState(450)
+  const [panelWidth, setPanelWidth] = useState(500)
   const [isDragging, setIsDragging] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const minWidth = 300
-  const maxWidth = 700
+  const minWidth = 350
+  const maxWidth = 1200
 
   // Initialize chat session when chat opens
   useEffect(() => {
@@ -41,6 +41,7 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!isDragging) return
+      e.preventDefault()
       const newWidth = window.innerWidth - e.clientX
       if (newWidth >= minWidth && newWidth <= maxWidth) {
         setPanelWidth(newWidth)
@@ -49,9 +50,13 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
 
     const handleMouseUp = () => {
       setIsDragging(false)
+      document.body.style.cursor = ''
+      document.body.style.userSelect = ''
     }
 
     if (isDragging) {
+      document.body.style.cursor = 'col-resize'
+      document.body.style.userSelect = 'none'
       document.addEventListener('mousemove', handleMouseMove)
       document.addEventListener('mouseup', handleMouseUp)
     }
@@ -59,6 +64,8 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
     return () => {
       document.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mouseup', handleMouseUp)
+      document.body.style.cursor = ''
+      document.body.style.userSelect = ''
     }
   }, [isDragging, minWidth, maxWidth])
 
@@ -224,7 +231,7 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
     <div className="pt-[70px] min-h-screen bg-[#f5f5f5] relative">
       {/* Main Content - Shifts when panel is open */}
       <div 
-        className="transition-all duration-300 ease-in-out"
+        className={isDragging ? '' : 'transition-all duration-300 ease-in-out'}
         style={{ 
           marginRight: isAIChatOpen ? `${panelWidth}px` : '0px'
         }}
@@ -403,7 +410,7 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
       {/* AI Chat Side Panel */}
       {isAIChatOpen && (
         <div 
-          className="fixed top-[70px] right-0 h-[calc(100vh-70px)] bg-white shadow-2xl flex transition-all duration-300 ease-in-out z-40"
+          className={`fixed top-[70px] right-0 h-[calc(100vh-70px)] bg-white shadow-2xl flex z-40 ${isDragging ? '' : 'transition-all duration-300 ease-in-out'}`}
           style={{ width: `${panelWidth}px` }}
         >
           {/* Resize Handle */}
@@ -425,27 +432,27 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
                 <div key={index}>
                   <div className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                     <div
-                      className={`max-w-[80%] rounded-2xl px-4 py-2 ${
+                      className={`max-w-[80%] min-w-0 rounded-2xl px-4 py-2 overflow-hidden ${
                         msg.role === 'user'
                           ? 'bg-black bg-opacity-70 text-white rounded-br-sm'
                           : 'bg-gray-100 text-gray-800 rounded-bl-sm'
                       }`}
                     >
-                      {msg.role === 'assistant' ? (
-                        <div className="text-[15px] prose prose-sm max-w-none prose-headings:mt-3 prose-headings:mb-2 prose-p:my-1 prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5 prose-blockquote:my-2 prose-blockquote:border-l-4 prose-blockquote:border-[#01B2D6] prose-blockquote:pl-3 prose-blockquote:italic prose-table:text-sm prose-th:bg-gray-200 prose-th:p-2 prose-td:p-2 prose-td:border prose-th:border prose-code:bg-gray-200 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-pre:bg-gray-800 prose-pre:text-white prose-pre:p-3 prose-pre:rounded">
-                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                            {msg.content}
-                          </ReactMarkdown>
-                        </div>
-                      ) : (
-                        <p className="text-[15px]">{msg.content}</p>
-                      )}
+                    {msg.role === 'assistant' ? (
+                      <div className="text-[15px] prose prose-sm max-w-none break-words overflow-wrap-anywhere prose-headings:mt-3 prose-headings:mb-2 prose-p:my-1 prose-p:break-words prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5 prose-blockquote:my-2 prose-blockquote:border-l-4 prose-blockquote:border-[#01B2D6] prose-blockquote:pl-3 prose-blockquote:italic prose-table:text-xs prose-table:border-collapse prose-table:w-full prose-table:table-auto prose-th:bg-gray-300 prose-th:p-2 prose-th:border prose-th:border-gray-400 prose-th:font-semibold prose-td:p-2 prose-td:border prose-td:border-gray-300 prose-td:bg-white prose-code:bg-gray-200 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:break-words prose-pre:bg-gray-800 prose-pre:text-white prose-pre:p-3 prose-pre:rounded prose-pre:overflow-x-auto">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                          {msg.content}
+                        </ReactMarkdown>
+                      </div>
+                    ) : (
+                      <p className="text-[15px] break-words">{msg.content}</p>
+                    )}
                     </div>
                   </div>
                   
                   {/* Show suggested questions only after the first assistant message */}
                   {index === 0 && msg.role === 'assistant' && messages.length === 1 && (
-                    <div className="mt-3 space-y-2 flex flex-col items-start">
+                    <div className="mt-3 space-y-2 flex flex-col items-end w-full">
                       {suggestedQuestions.map((question, qIndex) => (
                         <button
                           key={qIndex}

@@ -24,3 +24,41 @@ body {
 * {
   box-sizing: border-box;
 }
+
+/* Markdown table styling for chat messages */
+.prose table {
+  border-collapse: collapse;
+  width: 100%;
+  display: table;
+  overflow-x: auto;
+  font-size: 0.875rem;
+}
+
+.prose table thead {
+  background-color: #e5e7eb;
+}
+
+.prose table th {
+  border: 1px solid #9ca3af;
+  padding: 0.5rem;
+  font-weight: 600;
+  text-align: left;
+  background-color: #d1d5db;
+}
+
+.prose table td {
+  border: 1px solid #d1d5db;
+  padding: 0.5rem;
+  background-color: white;
+}
+
+.prose table tr:nth-child(even) td {
+  background-color: #f9fafb;
+}
+
+/* Word wrapping for long text in chat */
+.prose p, .prose li, .prose td, .prose th {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
