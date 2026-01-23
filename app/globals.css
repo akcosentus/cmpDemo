@@ -32,6 +32,7 @@ body {
   display: table;
   overflow-x: auto;
   font-size: 0.875rem;
+  margin: 1.5rem 0;
 }
 
 .prose table thead {
@@ -40,20 +41,47 @@ body {
 
 .prose table th {
   border: 1px solid #9ca3af;
-  padding: 0.5rem;
+  padding: 0.75rem 1rem;
   font-weight: 600;
   text-align: left;
   background-color: #d1d5db;
+  line-height: 1.5;
 }
 
 .prose table td {
   border: 1px solid #d1d5db;
-  padding: 0.5rem;
+  padding: 0.75rem 1rem;
   background-color: white;
+  line-height: 1.6;
 }
 
 .prose table tr:nth-child(even) td {
   background-color: #f9fafb;
+}
+
+/* Add spacing between sections */
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.prose p {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+
+.prose ul, .prose ol {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+}
+
+.prose li {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  line-height: 1.6;
 }
 
 /* Word wrapping for long text in chat */
