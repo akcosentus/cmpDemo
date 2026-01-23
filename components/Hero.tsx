@@ -445,13 +445,13 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
                   
                   {/* Show suggested questions only after the first assistant message */}
                   {index === 0 && msg.role === 'assistant' && messages.length === 1 && (
-                    <div className="mt-4 space-y-2">
+                    <div className="mt-3 space-y-2 flex flex-col items-start">
                       {suggestedQuestions.map((question, qIndex) => (
                         <button
                           key={qIndex}
                           onClick={() => handleQuestionClick(question)}
                           disabled={isLoading}
-                          className="w-full text-left px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full transition-colors text-[14px] disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="text-left px-4 py-2 bg-black bg-opacity-70 hover:bg-opacity-80 text-white rounded-full transition-all text-[13px] disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           {question}
                         </button>
