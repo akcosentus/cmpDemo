@@ -294,7 +294,7 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
           {/* Tab Navigation */}
           <div className="mb-6">
             <div className="flex gap-2 border-b border-gray-300">
-              {['Dashboard 1', 'Dashboard 2', 'Dashboard 3', 'Dashboard 4'].map((tab, index) => (
+              {['Financials', 'RCM', 'Denials & A/R', 'Provider Scorecard'].map((tab, index) => (
                 <button
                   key={index}
                   onClick={() => setActiveTab(index)}
