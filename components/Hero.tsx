@@ -315,8 +315,8 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
             <img
               src={`/dashboard-${activeTab + 1}.png`}
               alt={`Dashboard ${activeTab + 1}`}
-              className="w-full h-auto max-w-4xl object-contain"
-              style={{ maxHeight: '70vh' }}
+              className="w-full h-auto object-contain"
+              style={{ maxHeight: '105vh', maxWidth: '90%' }}
             />
           </div>
 
