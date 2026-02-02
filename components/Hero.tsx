@@ -311,11 +311,12 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
           </div>
 
           {/* Dashboard Screenshot Display */}
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden flex justify-center">
             <img
               src={`/dashboard-${activeTab + 1}.png`}
               alt={`Dashboard ${activeTab + 1}`}
-              className="w-full h-auto"
+              className="w-full h-auto max-w-4xl object-contain"
+              style={{ maxHeight: '70vh' }}
             />
           </div>
 
