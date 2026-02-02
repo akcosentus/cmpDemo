@@ -16,7 +16,7 @@ export default function Navbar({ onAskAIClick }: NavbarProps) {
       <div className="container-fluid px-3">
         <div className="flex items-center justify-between h-[70px]">
           {/* Brand/Logo - Left Side */}
-          <a href="/" className="flex items-center text-white hover:opacity-90 transition-opacity">
+          <div className="flex items-center text-white">
             <Image 
               src="/cosentus_lion.png" 
               alt="Cosentus Logo" 
@@ -24,7 +24,7 @@ export default function Navbar({ onAskAIClick }: NavbarProps) {
               height={56}
               className="w-14 h-14 object-contain"
             />
-          </a>
+          </div>
 
           {/* Mobile menu button */}
           <button
@@ -41,9 +41,9 @@ export default function Navbar({ onAskAIClick }: NavbarProps) {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-0.5 flex-1 ml-3">
-            <a href="/caselogs" className="px-2.5 py-3 text-white hover:bg-white/10 transition-colors text-[19px] font-normal">
+            <button className="px-2.5 py-3 text-white hover:bg-white/10 transition-colors text-[19px] font-normal">
               Case Logs
-            </a>
+            </button>
             
             {/* Reports Dropdown */}
             <div className="relative">
@@ -59,19 +59,19 @@ export default function Navbar({ onAskAIClick }: NavbarProps) {
               
               {isReportsOpen && (
                 <div className="absolute left-0 mt-0 w-64 bg-white rounded-md shadow-lg py-1 z-50">
-                  <a href="/reports/adjustments" className="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Adjustments Listing</a>
-                  <a href="/reports/ar-detail" className="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">AR Detail</a>
-                  <a href="/reports/ar-summary" className="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">AR Summary</a>
-                  <a href="/reports/billing-outcomes" className="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Billing Outcomes</a>
-                  <a href="/reports/cash-receipts" className="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Cash Receipts</a>
-                  <a href="/reports/patient-ledger" className="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Patient Ledger</a>
+                  <button className="block w-full text-left px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Adjustments Listing</button>
+                  <button className="block w-full text-left px-4 py-2 text-base text-gray-700 hover:bg-gray-100">AR Detail</button>
+                  <button className="block w-full text-left px-4 py-2 text-base text-gray-700 hover:bg-gray-100">AR Summary</button>
+                  <button className="block w-full text-left px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Billing Outcomes</button>
+                  <button className="block w-full text-left px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Cash Receipts</button>
+                  <button className="block w-full text-left px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Patient Ledger</button>
                 </div>
               )}
             </div>
 
-            <a href="/accounts" className="px-2.5 py-3 text-white hover:bg-white/10 transition-colors text-[19px] font-normal">
+            <button className="px-2.5 py-3 text-white hover:bg-white/10 transition-colors text-[19px] font-normal">
               User Accounts
-            </a>
+            </button>
           </div>
 
           {/* Portal Agent Button */}
@@ -88,12 +88,12 @@ export default function Navbar({ onAskAIClick }: NavbarProps) {
 
           {/* Right side - Client & User */}
           <div className="hidden md:flex items-center space-x-0.5">
-            <a href="/switch-client" className="px-2.5 py-3 text-white hover:bg-white/10 transition-colors text-[19px] font-normal">
+            <button className="px-2.5 py-3 text-white hover:bg-white/10 transition-colors text-[19px] font-normal">
               DEMO ANESTHESIA
-            </a>
-            <a href="/logout" className="px-2.5 py-3 text-white hover:bg-white/10 transition-colors text-[19px] font-normal">
+            </button>
+            <button className="px-2.5 py-3 text-white hover:bg-white/10 transition-colors text-[19px] font-normal">
               Log Out
-            </a>
+            </button>
           </div>
         </div>
 
@@ -101,22 +101,22 @@ export default function Navbar({ onAskAIClick }: NavbarProps) {
         {isMenuOpen && (
           <div className="md:hidden pb-4">
             <div className="flex flex-col space-y-2">
-              <a href="/caselogs" className="px-4 py-3 text-white hover:bg-white/10 transition-colors text-base font-light">
+              <button className="px-4 py-3 text-white hover:bg-white/10 transition-colors text-base font-light text-left w-full">
                 Case Logs
-              </a>
-              <a href="/reports" className="px-4 py-3 text-white hover:bg-white/10 transition-colors text-base font-light">
+              </button>
+              <button className="px-4 py-3 text-white hover:bg-white/10 transition-colors text-base font-light text-left w-full">
                 Reports
-              </a>
-              <a href="/accounts" className="px-4 py-3 text-white hover:bg-white/10 transition-colors text-base font-light">
+              </button>
+              <button className="px-4 py-3 text-white hover:bg-white/10 transition-colors text-base font-light text-left w-full">
                 User Accounts
-              </a>
+              </button>
               <div className="border-t border-white/20 my-2"></div>
-              <a href="/switch-client" className="px-4 py-3 text-white hover:bg-white/10 transition-colors text-base font-light">
+              <button className="px-4 py-3 text-white hover:bg-white/10 transition-colors text-base font-light text-left w-full">
                 DEMO ANESTHESIA
-              </a>
-              <a href="/logout" className="px-4 py-3 text-white hover:bg-white/10 transition-colors text-base font-light">
+              </button>
+              <button className="px-4 py-3 text-white hover:bg-white/10 transition-colors text-base font-light text-left w-full">
                 Log Out
-              </a>
+              </button>
             </div>
           </div>
         )}
