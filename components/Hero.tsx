@@ -313,12 +313,7 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
           {/* Dashboard Screenshot Display */}
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
             <img
-              src={
-                activeTab === 0 ? '/Screenshot 2026-02-02 at 12.42.50 PM.png' :
-                activeTab === 1 ? '/Screenshot 2026-02-02 at 12.42.59 PM.png' :
-                activeTab === 2 ? '/Screenshot 2026-02-02 at 12.43.09 PM.png' :
-                '/Screenshot 2026-02-02 at 12.43.23 PM.png'
-              }
+              src={`/dashboard-${activeTab + 1}.png`}
               alt={`Dashboard ${activeTab + 1}`}
               className="w-full h-auto"
             />
