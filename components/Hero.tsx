@@ -288,7 +288,7 @@ export default function Hero({ isAIChatOpen }: HeroProps) {
         <div className="container mx-auto px-6 py-8">
           {/* Welcome Header */}
           <h2 className="text-center text-[32px] font-medium text-[#333] mb-8">
-            Welcome to ClaimsManager Provider Portal!
+            Welcome to Accreda Client Portal
           </h2>
 
           {/* Tab Navigation */}
