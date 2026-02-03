@@ -83,7 +83,7 @@ export default function Navbar({ onAskAIClick }: NavbarProps) {
               <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="#01B2D6"/>
               <path d="M19 3L20 6L23 7L20 8L19 11L18 8L15 7L18 6L19 3Z" fill="#01B2D6"/>
             </svg>
-            Portal Agent
+            Accreda AI
           </button>
 
           {/* Right side - Client & User */}
